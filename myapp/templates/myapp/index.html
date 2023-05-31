@@ -1,0 +1,151 @@
+<style>
+
+    h2 {
+        margin-top: 20px;
+        font-size: 24px;
+        text-align: center;
+      }
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        background-color: orange;
+        color: white;
+        padding: 10px;
+        
+      }
+
+      .navbar-left {
+        order: 1;
+      }
+
+      .navbar-right {
+        order: 2;
+      }
+
+      .navbar-link {
+        color: white;
+        text-decoration: none;
+        margin-left: 10px;
+      }
+
+    .search-results {
+      width: 100%;
+      border-collapse: collapse;
+      width: 100%;
+    }
+  
+    .search-results th,
+    .search-results td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+  
+    .search-results th {
+      background-color: orange;
+      color: white;
+      font-weight: bold;
+    }
+
+    .search-form {
+        text-align: center;
+        margin-bottom: 20px;
+        margin-top: 20px;
+      }
+    
+      .search-form input[type="text"] {
+        padding: 10px;
+        font-family: "Arial", sans-serif;
+        font-size: 16px;
+        border-radius: 5px;
+        border: none;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        outline: none;
+      }
+    
+      .search-results tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+
+      .search-form button[type="submit"] {
+        padding: 10px 20px;
+        font-family: "Arial", sans-serif;
+        font-size: 16px;
+        color: #fff;
+        background-color: orange;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+    
+      .search-form button[type="submit"]:hover {
+        background-color: #ff8500;
+      }
+  </style>
+
+
+  <nav class="navbar">
+    <div class="navbar-left">
+        <span class="navbar-logo">Journal Name</span>
+      </div>
+    <div class="navbar-right">
+      <a href="/admin/login/" class="navbar-link">Admin Login</a>
+    </div>
+  </nav>
+
+
+<div class="search-form">
+    <form action="" method="GET">
+      <input type="text" name="q" placeholder="Search..." />
+      <button type="submit">Search</button>
+    </form>
+  </div>
+
+
+  {% if manuscripts or book_reviews or other_publications %}
+  <h2>Search Results</h2>
+  <table class="search-results">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Volume</th>
+        <th>Issue</th>
+        <th>Topic Geography</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for manuscript in manuscripts %}
+        <tr>
+          <td>{{ manuscript.title }}</td>
+          <td>{{ manuscript.authors.all|join:", " }}</td>
+          <td>{{ manuscript.vol }}</td>
+          <td>{{ manuscript.issue }}</td>
+          <td>{{ manuscript.topic_geography }}</td>
+        </tr>
+      {% endfor %}
+      {% for book_review in book_reviews %}
+        <tr>
+          <td>{{ book_review.book_title.title }}</td>
+          <td>{{ book_review.reviewers.all|join:", " }}</td>
+          <td>{{ book_review.vol }}</td>
+          <td>{{ book_review.issue }}</td>
+          <td>{{ book_review.topic_geography }}</td>
+        </tr>
+      {% endfor %}
+      {% for other_publication in other_publications %}
+        <tr>
+          <td>{{ other_publication.title }}</td>
+          <td>{{ other_publication.authors.all|join:", " }}</td>
+          <td>{{ other_publication.vol }}</td>
+          <td>{{ other_publication.issue }}</td>
+          <td>{{ other_publication.topic_geography }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endif %}
